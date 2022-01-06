@@ -25,36 +25,19 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author harry
  */
-@CrossOrigin
-@RestController
-@RequestMapping("/data")
+@Controller
 public class DataMakanan {
-    @Autowired
-    private DataMakanan eat;
-    
-    @GetMapping("/Eating")
-    public List<DataMakanan> getAllMakanan(){
-        return eat.getAllMakanan();
-    }
-    
-    @GetMapping ("/Eating/{IDMakan}")
-    public DataMakanan getMakanById(@PathVariable String IDMakan){
-        return eat.getMakanById(IDMakan);
-    }
-    
-    @PostMapping ("/Eating")
-    public DataMakanan saveDataMakananDetails(@RequestBody DataMakanan s){
-        return eat.saveDataMakananDetails(s);
-    }
-    
-    @PutMapping("/Eating")
-    public DataMakanan updateDataMakanan(@RequestBody DataMakanan s){
-        return eat.updateDataMakanan(s);
-    }
-    
-    @DeleteMapping("/Eating/{IDMakan}")
-    public ResponseEntity<HttpStatus> deleteDataMakananById(@PathVariable String IDMakan){
-        eat.deleteDataMakananById(IDMakan);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @RequestMapping("/Eeting")
+    @ResponseBody
+    public List<Makanan> getMakanan(){
+        List<Makanan> DataMakanan = new ArrayList<>();
+
+        MakananJpaController controller = new MakananJpaController() ;
+
+        try {
+            DataMakanan = controller.findMakananEntities();
+        }catch (Exception e){}
+
+        return DataMakanan;
     }
 }
